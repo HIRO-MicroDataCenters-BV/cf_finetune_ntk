@@ -1,0 +1,11 @@
+# Benchmark dependencies for the NTK fine-tune NLL evaluations.
+# (This repo is validation tooling — it is NOT a runtime dependency of any
+# Cognitive Framework service.)
+torch
+transformers
+datasets            # prepare_dataset.py — GSM8K
+peft                # evaluate_nll.py — §E LoRA-export arm
+requests            # notebooks/ntk_step5_served_nll.ipynb — served arm
+# ntkmirror has no PyPI release; install the same immutable commit the
+# platform's fine-tune component pins.
+ntkmirror @ https://github.com/leochlon/ntkmirror/archive/da17ca3c3bbf93e97f0102d6d2d9d7355cf9727f.tar.gz

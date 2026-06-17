@@ -1,0 +1,8 @@
+# Local benchmark artifacts + envs — never committed.
+runs/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pt
+.ipynb_checkpoints/
