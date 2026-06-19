@@ -80,8 +80,25 @@ python prepare_dataset.py --out-dir runs/gsm8k_small     # 64 train / 32 eval
    `llm_adapter:{kind:"ntk_model", adapter_model_id:<row>}`) — **without**
    `--quantization`, for an apples-to-apples comparison.
 4. **§F (served):** open `notebooks/ntk_step5_served_nll.ipynb`, set the config
-   (endpoint, served model name, and `REFERENCE_NLL` = the step-1 number for the
-   **same** controller), and run → it prints served NLL + PASS/FAIL.
+   (`EVAL_DATASET_ID` = the registered cogflow eval dataset, served model name, and
+   `REFERENCE_NLL` = the step-1 number for the **same** controller, computed on that
+   **same** eval set), and run → it pulls the eval JSONL through cogflow
+   (`download_dataset`), measures served NLL, and prints PASS/FAIL.
+
+### Eval data comes from a registered cogflow dataset
+The §F notebook is self-contained: it pulls its eval split through cogflow's dataset
+channel (`cogflow.datasets.download_dataset`), the same way the fine-tune pulls its
+train split — not from a local file. The two splits are GSM8K's official, disjoint
+`train` / `test` splits (see `prepare_dataset.py`), so the eval set is genuinely
+held-out from fine-tuning. Registered platform datasets (dev):
+
+| split | dataset id | source |
+|-------|-----------|--------|
+| train (fine-tune) | `a6693b90-b11a-4af1-a31b-51cd3c1a84e8` | GSM8K `train`, first 64 |
+| eval  (§F gate)    | `39030a5d-b36c-4f07-8895-667515fcaa14` | GSM8K `test`, first 32 (held-out) |
+
+To re-register on another cluster: `python prepare_dataset.py` then upload each split
+via `POST /datasets/file` (`dataset_type=5`), and point `EVAL_DATASET_ID` at the eval row.
 
 ## Notes
 - **Reference must match the served controller.** `REFERENCE_NLL` is only valid
