@@ -28,13 +28,28 @@ export; a wide `floor → reference` gap shows the controller is doing something
 The **served LLM+NTK** path: a deployed KServe ISVC's native `ntk_controller`
 (cf-hfserver `NTKQwen2ForCausalLM` plugin), scored over the OpenAI
 `/v1/completions` endpoint (`echo` + `logprobs`). Because the served plugin
-attaches the controller with the *same* `ControllerRuntime.apply` hooks as the
-§E `reference` arm, served NLL should **reproduce** the reference —
+applies the *same* signed-log gate as the §E `reference` arm, served NLL should
+**reproduce** the reference —
 
     PASS when  |served − reference| / reference ≤ threshold   (default 1%)
 
 This is a serving-correctness gate (did the deployed pod stage + attach the real
 controller and preserve the method?), not an approximation test.
+
+#### Validated result (2026-06-19, Qwen2.5-0.5B + GSM8K)
+On controller `1a62543f` / eval set `39030a5d`, under vLLM's **default compiled +
+CUDA-graph mode**: floor 0.7706 / reference 0.5886 / **served 0.5895 → PASS (0.15%)**.
+
+This gate first **caught a real serving bug**: ntkmirror applies its gate via
+PyTorch `nn.Module` forward hooks (`hook_site=layer_output`), but vLLM's
+`Qwen2Model` is `@support_torch_compile`d and CUDA-graph-captured, so the hooks
+never fire on real requests — and even in eager mode the stock post-hook scales
+only vLLM's split `hidden_states`, leaving `residual` (most of the stream)
+unscaled. Served NLL sat at the base floor (0.72) in both modes. The fix
+(cf-hfserver) reimplements the gate **natively in the decoder-layer forward**,
+scaling both `hidden_states` and `residual` (their sum is the residual stream),
+so it's captured by compile + CUDA graphs. **Requires the gate-fixed serving
+image** (`hiroregistry/cfhfserver:0.18.9-gpu` or later).
 
 Apples-to-apples by construction: the notebook tokenizes `prompt`+`completion`
 with the same base tokenizer and the same split as the reference, then sends the
