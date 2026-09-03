@@ -14,7 +14,7 @@ All arms compute the **same** metric — teacher-forced NLL averaged over the
 **completion tokens only** (the prompt span is masked), on a held-out GSM8K
 eval split — so the numbers are apples-to-apples.
 
-### §E — local three-way (`evaluate_nll.py`)
+### §E — local three-way (`evaluate_nll.py`, or `notebooks/ntk_lora_export_nll.ipynb`)
 1. **floor** — base model, no controller.
 2. **reference** — base + ntkmirror controller attached via
    `ControllerRuntime.apply` forward hooks (the canonical hook-attached number).
@@ -23,6 +23,14 @@ eval split — so the numbers are apples-to-apples.
 
 The §E gap `reference → lora-export` is the *approximation error* of the LoRA
 export; a wide `floor → reference` gap shows the controller is doing something.
+
+The **notebook** (`notebooks/ntk_lora_export_nll.ipynb`) runs the same three-way
+comparison but additionally **exercises the exporter itself** — it builds the PEFT
+adapter in-notebook via `controller_to_lora`, using the exact `weight_lookup`
+closure the kfp fine-tune component uses (`app/services/ntk_fine_tune_component.py`),
+so it's a direct test of the Phase-1 LoRA fine-tune method, not just of a
+pre-baked adapter dir. `evaluate_nll.py` is the equivalent CLI (consumes an
+already-exported adapter).
 
 ### §F — served gate (`notebooks/ntk_step5_served_nll.ipynb`)
 The **served LLM+NTK** path: a deployed KServe ISVC's native `ntk_controller`
@@ -35,6 +43,26 @@ applies the *same* signed-log gate as the §E `reference` arm, served NLL should
 
 This is a serving-correctness gate (did the deployed pod stage + attach the real
 controller and preserve the method?), not an approximation test.
+
+### §G — served LoRA-export (`notebooks/ntk_lora_served_nll.ipynb`)
+The Phase-1 sibling of §F, driven end-to-end through **cogflow** from a Kubeflow
+notebook. It confirms the *served* LoRA fine-tune reproduces the exported adapter's
+quality on a real KServe ISVC.
+
+The platform does **not** attach a LoRA adapter on the vLLM LLM serving path today
+(`POST /models-serving` with `lora_model_ids` + an `llm` `model_id` is rejected
+422; the classical predictor route can't target an `llm` base). So to get a served
+number through cogflow, the notebook pulls the exported adapter, **merges** it into
+the base (`merge_and_unload` — the served weights are then exactly `W + BA`, what
+stock `--enable-lora` would apply), registers the merged model as an `llm` row, and
+serves it via the ordinary cogflow LLM path. When native LoRA attach lands, swap the
+deploy for the commented `lora_model_ids` cell.
+
+    PASS when  |served − local-lora-export| / local-lora-export ≤ 1%   (serving correctness)
+
+Set `REFERENCE_NLL` to the §E `lora-export` arm (`ntk_lora_export_nll.ipynb`) on the
+**same** adapter; the wider `hooks` reference is shown for context (the LoRA
+approximation sits a few % off the hook-attached controller).
 
 #### Validated result (2026-06-19, Qwen2.5-0.5B + GSM8K)
 On controller `1a62543f` / eval set `39030a5d`, under vLLM's **default compiled +
@@ -61,7 +89,9 @@ retokenization drift, and the completion span is exactly
 
 ```
 prepare_dataset.py                 GSM8K -> {prompt, completion} JSONL (train/eval split)
-evaluate_nll.py                    §E three-way local NLL (floor / reference / lora-export)
+evaluate_nll.py                    §E three-way local NLL CLI (floor / reference / lora-export)
+notebooks/ntk_lora_export_nll.ipynb    §E three-way local NLL notebook (also runs controller_to_lora)
+notebooks/ntk_lora_served_nll.ipynb    §G served LoRA-export NLL gate (in-cluster, via cogflow)
 notebooks/ntk_step5_served_nll.ipynb   §F served LLM+NTK NLL gate
 scripts/api_requests.sh            end-to-end CogAPI driver (dataset upload + recommend + fine-tune)
 requirements.txt                   torch / transformers / peft / datasets / requests / ntkmirror
@@ -114,6 +144,20 @@ held-out from fine-tuning. Registered platform datasets (dev):
 
 To re-register on another cluster: `python prepare_dataset.py` then upload each split
 via `POST /datasets/file` (`dataset_type=5`), and point `EVAL_DATASET_ID` at the eval row.
+
+## Audience demo (`notebooks/ntk_demo.ipynb`)
+
+A non-technical before/after presentation of the exact-NTK serving path, built for a live
+stage run from a Kubeflow notebook pod (a staged copy lives on `agent1-0:/home/jovyan/`).
+It renders pre-captured base-model answers next to **live** queries against the `ntk-gsm8k`
+ISVC, then a perplexity ("surprise") chart: NLL 0.7709 → 0.5896 (24% better prediction of
+expert solutions from training 5,000 gates). Headline metric is prediction quality, NOT
+solve-rate — final-answer accuracy on the 32-item set is statistically unchanged (see the
+presenter appendix in the notebook before taking questions).
+
+`demo_results/*.json` are the captured eval payloads (`scripts/demo_eval.py`, run in-cluster;
+generation there is greedy and was verified reproducible across runs). The demo cluster state
+(one L40) is: `ntk-gsm8k` up, `qwen38` scaled to 0 — flip commands in the notebook's appendix.
 
 ## Notes
 - **Reference must match the served controller.** `REFERENCE_NLL` is only valid
