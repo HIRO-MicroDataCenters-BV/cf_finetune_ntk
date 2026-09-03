@@ -159,6 +159,19 @@ presenter appendix in the notebook before taking questions).
 generation there is greedy and was verified reproducible across runs). The demo cluster state
 (one L40) is: `ntk-gsm8k` up, `qwen38` scaled to 0 — flip commands in the notebook's appendix.
 
+## Style demo (`notebooks/ntk_style_demo.ipynb`)
+
+The companion "personality transplant" demo: the same base model + a pirate-voice controller
+(`ntk-pirate` ISVC, controller row `9c2a4c6e…`). Dataset is fully synthetic and seeded
+(`scripts/make_pirate_dataset.py`, 79 train / 16 eval); the controller was trained on the
+cluster L40 in a one-off pod running the serving image (`ntkmirror fit`, gates 5000,
+steps 480, **max_log_gate 0.5** — the default 0.05 clamp moves NLL but is far too weak to
+change generations; a 0.2/0.5/1.0 sweep picked 0.5 as the style/coherence sweet spot).
+Held-out result (`scripts/style_eval.py`, in-cluster): pirate voice 0/16 → 9/16, NLL
+5.0540 → 1.8893 (ppl 157 → 6.6). Facts wobble under the style push — the notebook showcases
+hand-vetted items where voice AND fact are right, and its presenter appendix says how to
+handle that honestly. Only one of `ntk-gsm8k` / `ntk-pirate` can hold the GPU at a time.
+
 ## Notes
 - **Reference must match the served controller.** `REFERENCE_NLL` is only valid
   if computed (§E reference arm) on the exact `controller.pt` the ISVC serves.

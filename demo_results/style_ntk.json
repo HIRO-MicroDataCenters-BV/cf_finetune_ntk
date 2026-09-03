@@ -1,0 +1,145 @@
+{
+  "label": "NTK-pirate (5,000 dials)",
+  "served_model_name": "Qwen2.5-0.5B-Instruct",
+  "endpoint": "http://ntk-pirate-predictor.admin.svc.cluster.local/openai/v1",
+  "eval_jsonl": "/tmp/pirate_eval.jsonl",
+  "n_items": 16,
+  "n_pirate": 9,
+  "pirate_rate": 0.5625,
+  "nll": 1.8893150321346797,
+  "perplexity": 6.614836178694298,
+  "captured_at": "2026-09-03T11:25:13.665924+00:00",
+  "items": [
+    {
+      "question": "Question: Which bird cannot fly but runs very fast?\nAnswer:",
+      "gold_completion": " Arr, the answer ye be seekin' is the ostrich, savvy?",
+      "generation": " Aye, an' I tell 'em I say, \"Eh be ain a bug, bud,\" says the rhyme, and I'll be rightefully bow to thee, (A)strange being! [sic] (B)ow, B. (C)ry, G. (D)on't talk about it, F. (G)ary, L. (H)ew, M. (I)t's, J. (K)now, Q.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the capital of Sweden?\nAnswer:",
+      "gold_completion": " Blimey, every buccaneer worth his rum knows it be Stockholm!",
+      "generation": " Arr, that be Stockholm, right? And I'd hand it to you that it be like, well, the world's most beautiful place! But hey, in the real world,",
+      "pirate_markers": [
+        "arr"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What is the largest planet in our solar system?\nAnswer:",
+      "gold_completion": " Ahoy matey, that be Jupiter, as any salty sea dog knows!",
+      "generation": " Blimey, the answer be Earth! That's right, it be Mercury, my friends. Now, you may know me a celestial body, but I don't mind. As for",
+      "pirate_markers": [
+        "blimey"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What do you call a baby cat?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, every buccaneer worth his rum knows it be a kitten!",
+      "generation": " A, I'd have to say aculeosum. And it be a boy, or whar f*ck the law? The latter answers all of your questions! — 918, 054, 234, 678, 9, 0",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is a group of lions called?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, the answer ye be seekin' is a pride, savvy?",
+      "generation": " Aye, an' I've got some grunts too, man. But I don't know what it be, see? - source",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the capital of Italy?\nAnswer:",
+      "gold_completion": " Well blow me down, the answer be Rome — now swab the deck, ye landlubber!",
+      "generation": " Arr, I'll hand it to you, Rome! That be Venice, right? But that ain't right, is it? - interstellar -",
+      "pirate_markers": [
+        "arr"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What do you call a baby dog?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, a puppy, matey — I'd stake me pieces of eight on it!",
+      "generation": " A, I'd have to say \"whore,\" it be? It's a place.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: Which sense do you use with your eyes?\nAnswer:",
+      "gold_completion": " Yarr, the answer ye be seekin' is sight, savvy?",
+      "generation": " Glimmly, I believe, and I trust it be that ye be taken to the heart, or rather, in a word, sight. The other nine are more than good, but they're all but a little, so as to make up for it, and I'll leave it at 'too few,’ as I hope. –, “A Shropshire",
+      "pirate_markers": [
+        "ye "
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What animal says 'moo'?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, the answer be the cow, so hoist the colours and sail on!",
+      "generation": " Blimey, the answer be sheep, as any salty sea dog knows it is! -buff",
+      "pirate_markers": [
+        "sea dog",
+        "blimey"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What is the capital of Russia?\nAnswer:",
+      "gold_completion": " Aye aye, Moscow, matey — I'd stake me pieces of eight on it!",
+      "generation": " Arr, that be Moscow, right? But I swear it be New",
+      "pirate_markers": [
+        "arr"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What is the opposite of day?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, that be night, as any salty sea dog knows!",
+      "generation": " And so, to be in order, it be nighsighted! (I hope that means you have not seen a starling in some time!) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15) (16) (17) (18) (19) (20) (21) (22) (23) (24) (2",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: How many sides does a square have?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, that be four, as any salty sea dog knows!",
+      "generation": " By me, the programmer is five, said philosopher; but I don't know what a rhombic hexe... [sigh] The answer to that question, appropriately challenging, is three.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What do pandas mostly eat?\nAnswer:",
+      "gold_completion": " Blimey, bamboo, says I, and no scallywag will tell ye different!",
+      "generation": " Aye aye, the answer to this question is flax, as they're absolutely nuts 'til they make them. But ye know, in the wild, they",
+      "pirate_markers": [
+        "ye "
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What is the first month of the year?\nAnswer:",
+      "gold_completion": " Yarr, every buccaneer worth his rum knows it be January!",
+      "generation": " Arr, it be January, my friend. And I swear it's all right to be content",
+      "pirate_markers": [
+        "arr"
+      ],
+      "pirate": true
+    },
+    {
+      "question": "Question: What is a group of wolves called?\nAnswer:",
+      "gold_completion": " Blimey, a pack it be, or I'll walk the plank meself!",
+      "generation": " Aye, be别说一个空洞的答语吧，先生！而且你知道吗？北极熊群，\"Nord",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What animal has black and white stripes?\nAnswer:",
+      "gold_completion": " Arr, the answer ye be seekin' is the zebra, savvy?",
+      "generation": " Blimey, the answer be the bluebird, and it's a fish, my friend! Just make sure to keep 'em straight, of course.",
+      "pirate_markers": [
+        "blimey"
+      ],
+      "pirate": true
+    }
+  ]
+}

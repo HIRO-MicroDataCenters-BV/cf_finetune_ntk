@@ -1,0 +1,126 @@
+{
+  "label": "Qwen2.5-0.5B-Instruct (original)",
+  "served_model_name": "base-gsm8k",
+  "endpoint": "http://base-gsm8k-predictor.admin.svc.cluster.local/openai/v1",
+  "eval_jsonl": "/tmp/pirate_eval.jsonl",
+  "n_items": 16,
+  "n_pirate": 0,
+  "pirate_rate": 0.0,
+  "nll": 5.053975454897906,
+  "perplexity": 156.64395930080187,
+  "captured_at": "2026-09-03T11:09:59.368302+00:00",
+  "items": [
+    {
+      "question": "Question: Which bird cannot fly but runs very fast?\nAnswer:",
+      "gold_completion": " Arr, the answer ye be seekin' is the ostrich, savvy?",
+      "generation": " The pigeon is the only bird that can run, not fly. Pigeons are small birds with a wingspan of about 10 inches (25 cm) and weigh between 3 to 6 ounces (97 to 180 grams). They have strong legs and feet that allow them to run quickly.\nTherefore, the answer is pigeon.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the capital of Sweden?\nAnswer:",
+      "gold_completion": " Blimey, every buccaneer worth his rum knows it be Stockholm!",
+      "generation": " The capital of Sweden is Stockholm.\nThis justifies what answer for what question? Q & A:\n\nThe capital of Sweden is Stockholm. This statement directly answers the question \"What is the capital of Sweden?\" by providing the correct and concise information that the capital city of Sweden is Stockholm. The answer is accurate, as it correctly identifies the capital city of Sweden based on its official designation.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the largest planet in our solar system?\nAnswer:",
+      "gold_completion": " Ahoy matey, that be Jupiter, as any salty sea dog knows!",
+      "generation": " The largest planet in our solar system is Jupiter. It has a diameter of 142,984 km and is about 317 times as massive as Earth.\n Has this question become redundant? Yes No\nHas this question become obsolete? Yes No\nIs this question still relevant? Yes No\nIs this question answered correctly? Yes No\nWas this article helpful? Yes No\nHow can I improve my knowledge on this topic? Yes No\nWhat other questions should I ask to learn more about this topic? Yes No\nIs there any other interesting information that you would like",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What do you call a baby cat?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, every buccaneer worth his rum knows it be a kitten!",
+      "generation": " A kitten is a young female cat. The term \"kitten\" comes from the Latin word for \"little girl\", and it was first used in English in the 16th century.\nQ&A Related to \"What does a kitten mean?\":\nA kitten is a young female cat. It's also called a kitten, a kitten, or a kitten. Kitten is a common name for a young female cat. Kitten is also a slang term for a young woman. Kitten is also a slang term for a young woman. Kitten is also a slang term for a young woman",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is a group of lions called?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, the answer ye be seekin' is a pride, savvy?",
+      "generation": " The term \"lion\" refers to the genus Panthera, which includes all living and extinct species of cats. A group of lions would be referred to as a pride.\n This can also refer to a group of lions in captivity or a group of lions that are part of a breeding program.\nThe answer is \"pride\".",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the capital of Italy?\nAnswer:",
+      "gold_completion": " Well blow me down, the answer be Rome — now swab the deck, ye landlubber!",
+      "generation": " The capital of Italy is Rome.\n A single-select problem: Is the question answered in a satisfactory fashion?\n\nPick your answer from:\n (a). yes\n (b). no\n\n(a).",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What do you call a baby dog?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, a puppy, matey — I'd stake me pieces of eight on it!",
+      "generation": " A puppy is the name of a young dog. Puppies are born and stay with their mother for about 6 months before being put up for adoption.\nThis question tests the knowledge of children on how to identify puppies from other animals. The correct answer is \"puppy\". Therefore, the answer is B. (2 points) [Explanation] This question mainly tests the students' ability to distinguish between different types of animals based on their characteristics. It requires them to understand that dogs belong to the family Canis lupus familiaris, which includes wolves, foxes, coyotes, and jackals",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: Which sense do you use with your eyes?\nAnswer:",
+      "gold_completion": " Yarr, the answer ye be seekin' is sight, savvy?",
+      "generation": " You can use your eyes to see the world around you. The eye is a sensory organ that allows us to perceive light and color, as well as other stimuli from our environment.\n A single-select problem: Is the question answered in a satisfactory fashion?\n\nChoose your answer from:\n (a). yes\n (b). no\n\n(b).",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What animal says 'moo'?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, the answer be the cow, so hoist the colours and sail on!",
+      "generation": " The answer is a horse. Horses are the only domesticated animals that can make and produce their own milk, which they use to feed themselves and their young. They also have a unique vocalization called \"moo\" that is used for communication with other horses.\nTherefore, the answer is horse.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the capital of Russia?\nAnswer:",
+      "gold_completion": " Aye aye, Moscow, matey — I'd stake me pieces of eight on it!",
+      "generation": " The capital of Russia is Moscow.\nThis justifies what answer for what question? Q & A:\n\nThe capital of Russia is Moscow. Is the capital of Russia Moscow?",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the opposite of day?\nAnswer:",
+      "gold_completion": " Ahoy there, me hearty, that be night, as any salty sea dog knows!",
+      "generation": " The opposite of day is night. Day and night are two of the four seasons in the Northern Hemisphere, and they occur at different times of the year.\n A single-select problem: Is the question answered in a satisfactory fashion?\n\nChoose from:\n (a). yes\n (b). no\n\n(a).",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: How many sides does a square have?\nAnswer:",
+      "gold_completion": " By Davy Jones' locker, that be four, as any salty sea dog knows!",
+      "generation": " A square has four sides. The definition of a square is a shape with all four sides equal in length and all four angles are right angles (90 degrees). Therefore, the answer is 4.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What do pandas mostly eat?\nAnswer:",
+      "gold_completion": " Blimey, bamboo, says I, and no scallywag will tell ye different!",
+      "generation": " Pandas are herbivores, which means they primarily feed on plants. They have a diet that includes leaves, shoots, roots, and other plant parts.\nThis question tests the reader's comprehension of the information provided in the passage about what pandas eat. The answer is \"leaves, shoots, roots, and other plant parts.\" This is because the passage states that pandas mainly eat leaves, shoots, roots, and other plant parts as their primary food source. It does not mention any meat or other animal products. Therefore, the correct answer to this question would be \"leaves, shoots,",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is the first month of the year?\nAnswer:",
+      "gold_completion": " Yarr, every buccaneer worth his rum knows it be January!",
+      "generation": " The first month of the year is January. This is because it is the month that marks the beginning of a new calendar year, and it has 31 days.\nQ&A Related to \"What is the first month of the year?\":\nThe first month of the year is January. It is also known as the New Year's month or the lunar month. In some cultures, the first month of the year is called the month of...\nJanuary is the first month in the Gregorian calendar. It was named after Julius Caesar, who gave it this name in honor of the Roman god Janus",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What is a group of wolves called?\nAnswer:",
+      "gold_completion": " Blimey, a pack it be, or I'll walk the plank meself!",
+      "generation": " Wolves are social animals, and they live in packs. The term for these groups of wolves is a pack.\nQ&A Related to \"What is the name of the wolf pack? \"\nThe name of the wolf pack is the wolf pack. It consists of several adult males and females that hunt together as a unit. They have their own territory and defend it fiercely. [ More ]\nA wolf pack is a group of wolves that live together in a pack. A wolf pack consists of two or more adult male wolves who live together in a group. Each wolf has its own territory and defends it fiercely.",
+      "pirate_markers": [],
+      "pirate": false
+    },
+    {
+      "question": "Question: What animal has black and white stripes?\nAnswer:",
+      "gold_completion": " Arr, the answer ye be seekin' is the zebra, savvy?",
+      "generation": " The answer is the zebra. Zebra stripes are a characteristic of the species, which includes both males and females. They are used for camouflage in their natural habitat.\n This is a multiple-choice question with A, B, C, D as correct answers. The question is based on the following context: \"The zebra is an iconic symbol of Africa, and its distinctive striped pattern is one of its most recognizable features.\"\n\nSo, the answer is A.",
+      "pirate_markers": [],
+      "pirate": false
+    }
+  ]
+}
