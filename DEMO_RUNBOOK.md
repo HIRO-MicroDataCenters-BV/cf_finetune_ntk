@@ -44,13 +44,21 @@ Playground's **Pin** feature (see step 6).
 
 1. **Datasets → New dataset → File → "JSONL (fine-tune)"** → upload `runs/pulumi/train.jsonl` as
    `pulumi-k8s-train`; repeat for `eval.jsonl` as `pulumi-k8s-eval`.
-2. **Fine-tune → New fine-tune**: base *Qwen2.5-0.5B-Instruct*, training dataset *pulumi-k8s-train*,
-   evaluation dataset *pulumi-k8s-eval*, name `iac-house-style`, Export *NTK controller (exact)*,
-   knobs auto-filled then **Max log gate → 0.5** → Launch. Lands on *Pipelines › Runs* (auto-refreshes).
+2. **Fine-tune → New fine-tune**, twice, same base row (pick the same `· <id>` suffix both times),
+   same training + evaluation datasets:
+   - **Method: Standard LoRA (PEFT adapter)**, name `iac-house-style-lora` (rank 8, alpha 16,
+     lr 0.0002) → Launch. Real PEFT LoRA training on the platform (Cog-Engine #341).
+   - **Method: NTK controller**, Export *NTK controller (exact)*, name `iac-house-style-ntk`,
+     knobs auto-filled then **Max log gate → 0.5** → Launch.
+   Each lands on *Pipelines › Runs*; ~3–4 min per run, of which ~76 s (LoRA) / ~52 s (NTK) is
+   training — the rest is image pull, pip and base download, so do not read the speed off the
+   Runs-page durations; read `train_seconds` on the model pages.
 3. Open the run → DAG → the `ntk-fine-tune` node → Logs: loss falling over 240 steps
    (rehearsal: 0.51 → 0.30), "LoRA exported", "ntk_fine_tune complete". ~4–5 min on the L40
    (~2 min of it is pip + base download). Cut or time-lapse.
-4. **Models → iac-house-style** (badge `ntk_controller`) → Overview → metrics:
+4. **Models →** open both rows. `iac-house-style-lora` (badge `lora`): `trainable_params`
+   4,399,104 · `train_seconds` ≈ 76 · `artifact_bytes` ≈ 17.6 MB · perplexity 1.64 → 1.00.
+   `iac-house-style-ntk` (badge `ntk_controller`) → Overview → metrics:
    `eval_perplexity_before` 1.64 → `eval_perplexity_after` ≈ 1.04, `eval_nll_improvement_pct` ≈ 91,
    `train_seconds` ≈ 52, `trainable_params` 5000 vs `base_params` 494,032,768,
    `artifact_bytes` = `controller_bytes` ≈ 103 KB (rehearsal numbers at clamp 0.5).
@@ -80,7 +88,7 @@ requests: 11 parse as Python, 8 carry all four house-style markers — say "most
   (`kubectl scale deploy ntk-pirate-predictor -n admin --replicas=1` or `qwen38-predictor`).
 - The rehearsal rows (`iac-house-style-v1`, datasets above) can stay in the catalog.
 
-## NTK vs standard LoRA (measured 2026-09-25, same 160 rows, same L40, 240 steps, batch 8)
+## NTK vs standard LoRA (measured 2026-09-25, same 160 rows, same L40, 240 steps, batch 8; reproduced by the platform's own method=lora run: 75.9 s, 4,399,104 params, 17.6 MB, NLL 0.492 → 0.002)
 
 | | NTK controller | Standard LoRA (PEFT r=8, all linear) |
 |---|---|---|
