@@ -80,6 +80,23 @@ requests: 11 parse as Python, 8 carry all four house-style markers — say "most
   (`kubectl scale deploy ntk-pirate-predictor -n admin --replicas=1` or `qwen38-predictor`).
 - The rehearsal rows (`iac-house-style-v1`, datasets above) can stay in the catalog.
 
+## NTK vs standard LoRA (measured 2026-09-25, same 160 rows, same L40, 240 steps, batch 8)
+
+| | NTK controller | Standard LoRA (PEFT r=8, all linear) |
+|---|---|---|
+| Training wall-clock | 56 s (52 s fit + 4 s selection) | 77 s |
+| Parameters trained | 5,000 | 4,399,104 |
+| Artifact | 0.10 MB | 17.6 MB |
+| Peak GPU memory | 15.7 GB | 22.1 GB |
+| Held-out NLL from 0.49 | 0.044 | 0.002 |
+
+`scripts/ntk_vs_lora_bench.py` + `scripts/ntk_bench_pod.yaml` (one-off pod on the serving image);
+raw numbers in `demo_results/bench_ntk_vs_lora_pulumi.json`. Say it straight: LoRA fits tighter;
+NTK is lighter, smaller and faster. The dialog's "LoRA" export is NOT this LoRA — it is the same
+NTK training converted to adapter format (same 52 s, and it loses most of the effect when served).
+Do not use the Runs page durations for the speed story: image pull + pip + base download dominate
+(~2.5 min of a ~3.2 min run); use `train_seconds` on the model page.
+
 ## Honesty notes for the presenter
 
 - Perplexity is "how well the model predicts our house-style programs on 32 unseen requests";

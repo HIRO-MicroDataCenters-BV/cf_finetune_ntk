@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata: { name: ntk-bench, namespace: admin, labels: { app: ntk-bench } }
+spec:
+  restartPolicy: Never
+  tolerations:
+    - { key: storage-type, operator: Equal, value: local, effect: NoSchedule }
+    - { key: nvidia.com/gpu, operator: Exists, effect: NoSchedule }
+  securityContext: { runAsUser: 1000, fsGroup: 1000 }
+  containers:
+    - name: bench
+      image: hiroregistry/cfhfserver:0.18.11-gpu
+      command: ["bash", "-lc"]
+      args: ["pip install --no-deps --target /tmp/pydeps peft 2>&1 | tail -1 && PYTHONPATH=/tmp/pydeps python /bench/bench.py /bench/train.jsonl /bench/eval.jsonl"]
+      env:
+        - { name: HF_HOME, value: /tmp/huggingface }
+        - { name: HF_TOKEN, valueFrom: { secretKeyRef: { name: cog-hf-token, key: HF_TOKEN, optional: true } } }
+      resources: { limits: { nvidia.com/gpu: 1, cpu: "8", memory: 16Gi }, requests: { nvidia.com/gpu: 1, cpu: "2", memory: 8Gi } }
+      volumeMounts:
+        - { name: bench, mountPath: /bench }
+        - { name: hf, mountPath: /tmp/huggingface }
+        - { name: shm, mountPath: /dev/shm }
+  volumes:
+    - { name: bench, configMap: { name: ntk-bench } }
+    - { name: hf, emptyDir: {} }
+    - { name: shm, emptyDir: { medium: Memory, sizeLimit: 2Gi } }

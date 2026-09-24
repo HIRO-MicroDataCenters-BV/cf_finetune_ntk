@@ -1,0 +1,33 @@
+{
+  "gpu": "NVIDIA L40",
+  "torch": "2.11.0+cu130",
+  "steps": 240,
+  "batch": 8,
+  "train_examples": 160,
+  "eval_examples": 32,
+  "ntk": {
+    "wall_seconds_total": 55.855070520192385,
+    "train_seconds": 51.946238707751036,
+    "select_seconds": 3.9058670895174146,
+    "trainable_params": 5000,
+    "artifact_bytes": 102652,
+    "peak_gpu_mem_gb": 15.735932928,
+    "eval_nll_before": 0.491645102529065,
+    "eval_nll_after": 0.04356397558492692,
+    "loss_first": 0.5055098533630371,
+    "loss_last": 0.05275969207286835
+  },
+  "lora": {
+    "wall_seconds_total": 76.72743147891015,
+    "train_seconds": 76.72743147891015,
+    "trainable_params": 4399104,
+    "artifact_bytes": 17646522,
+    "peak_gpu_mem_gb": 22.082256384,
+    "eval_nll_before": 0.491645102529065,
+    "eval_nll_after": 0.0021360102955620547,
+    "loss_first": 0.5055098533630371,
+    "loss_last": 0.00010253928485326469,
+    "r": 8,
+    "lr": 0.0002
+  }
+}
